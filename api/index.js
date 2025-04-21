@@ -1,1 +1,3 @@
-console.log("Este es mi index.js");
+export function GET(req, res) {
+    return new Response('Hello from Vercel!');
+}
