@@ -20,10 +20,17 @@ export class User{
     }
     async PushAsync(){
         await this.collection.add({
-            nombre: this.nombre,
-            apellido:  this.apellido,
             email: this.email
         })
     }
+    async GetUserByEmailAsync() {
+    const snapshot = await this.collection.where("email", "==", this.email).limit(1).get();
 
+    if (snapshot.empty) {
+        return null; // No se encontró el usuario
+    }
+
+    const doc = snapshot.docs[0];
+    return { id: doc.id, ...doc.data() };
+    }
 }

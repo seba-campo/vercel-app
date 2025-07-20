@@ -6,9 +6,7 @@ export async function getAllRoomsAsync(){
     return await authInstance.PullAllAsync()
 }
 
-export async function createAuthAsync(email: string){
+export async function FindOrCreateAsyncController(email: string){
     const authInstance = new Auth(email);
     return await authInstance.FindOrCreateAsync()
-    // return authInstance.();
-    // return await authInstance.PushAsync();
 }
