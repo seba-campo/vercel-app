@@ -3,12 +3,18 @@ export class User{
     collection = fs.collection("users");
     ref: FirebaseFirestore.DocumentReference
     nombre: string = "Foo"
-    apellido: string = "Foos"
+    apellido: string = "Bar"
     email: string
     constructor(email: string, nombre?: string, apellido?: string){
-        this.nombre = nombre;
-        this.apellido = "apellido";
         this.email = email;
+        if(nombre && apellido){
+            this.nombre = nombre;
+            this.apellido = apellido;
+        }
+        else{
+            this.nombre = "foo";
+            this.apellido = "bar";
+        }
     }
     async PullAllAsync(){
         const userDocs = await this.collection.get();

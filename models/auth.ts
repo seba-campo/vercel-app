@@ -1,7 +1,7 @@
 import fs from "../lib/firebase";
-import { addMinutes, constructNow } from "date-fns"
 import * as jwt from "jsonwebtoken"
 import { User } from "./user";
+import { error } from "console";
 
 export class Auth{
     collection = fs.collection("auth");
@@ -11,19 +11,25 @@ export class Auth{
         this.email = email;
     }
     async PullAllAsync(){
-        const roomDocs = await this.collection.get();
-        var rooms = [];
-        roomDocs.forEach(doc => {
-            rooms.push({id: doc.id, data: doc.data()})
+        const authDocs = await this.collection.get();
+        var docs = [];
+        authDocs.forEach(doc => {
+            docs.push({id: doc.id, data: doc.data()})
         })
-        return rooms
+        return docs
     }
     private GenerateToken(){
        return jwt.sign({data: 'foobar'}, 'secret', { expiresIn: '5MIN' });
     }
     async FindOrCreateAsync(){
         const data = await this.PullAllAsync();
-        const auth = data.find(e => e.email = this.email);
+        const auth = data.find(e => e.data.email === this.email);
+        if(auth == undefined){
+            const newAuth = await this.CreateAsync();
+            console.log(newAuth)
+            return newAuth
+        };
+
         return auth.data
     }
     async CreateAsync(){
