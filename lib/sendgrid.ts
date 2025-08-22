@@ -6,15 +6,15 @@ export default function sendgrid(){
         to: 'campo.sebastian44@gmail.com', // Change to your recipient
         from: 'sebimotocross@gmail.com', // Change to your verified sender
         subject: 'Sending with SendGrid is Fun',
-        text: 'Token de',
+        text: 'Token de acceso',
         html: '<strong>TOKEN</strong>',
         
         }
         sgMail
         .send(msg)
-        .then(() => {
+        .then((e) => {
             console.log('Email sent')
-            return true
+            e[0].statusCode            
         })
         .catch((error) => {
             console.error(error)
