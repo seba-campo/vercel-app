@@ -23,7 +23,14 @@ export class Auth{
         return docs
     }
     private GenerateJwt(){
-        return jwt.sign({"foo":"bar"}, "secret", {expiresIn: '25MIN'} )
+        return jwt.sign(
+            {
+                email: this.email,
+                docRef: this.ref.path
+            }, 
+            process.env.JWT_SECRET_KEY, 
+            {expiresIn: '45MIN'} 
+        )
     }
     private GenerateRandomToken(){
        return Math.floor(10000000 + Math.random() * 90000000);
@@ -64,6 +71,7 @@ export class Auth{
             throw new Error("Usuario no encontrado");
         }
         const authDoc = snapshot.docs[0].data();
+        this.ref = snapshot.docs[0].ref
         const expiration = authDoc.expiration.toDate() as Date;
         const token = authDoc.token as number;
         const now = new Date();

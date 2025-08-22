@@ -1,8 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import * as methods from "micro-method-router";
+import authorization from "../../../middleware/authorization";
+import { updateUserAddressAsync } from "../../../controllers/userController";
 
 export default methods({
-    async patch(req: NextApiRequest, res: NextApiResponse){
-        res.send("Metodo PATCH del /me/address");
-    }
+    patch: authorization(async(req: NextApiRequest, res: NextApiResponse) => {
+        const email = (req as any).auth.email
+        const newAddress = req.body.address;
+
+        res.send(await updateUserAddressAsync(email, newAddress))     
+    }),
 })

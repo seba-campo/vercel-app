@@ -1,0 +1,25 @@
+import { User } from "../models/user";
+
+export async function updateUserAddressAsync(email: string, newAddress: string){
+    const userInstance = new User(email);
+    try{
+        await userInstance.GetUserByEmailAsync();
+        userInstance.address = newAddress;
+        await userInstance.UpdateAsync();
+        return userInstance
+    }
+    catch(e){
+        throw new Error(e)
+    }
+}
+
+export async function getUserDataAsync(email: string){
+    const userInstance = new User(email);
+    try{
+        return await userInstance.GetUserByEmailAsync();
+    }
+    catch(e){
+        throw new Error(e);
+    }
+
+}
