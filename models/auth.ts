@@ -12,7 +12,6 @@ export class Auth{
     ref: FirebaseFirestore.DocumentReference
     constructor(email: string, token?: string){
         this.email = email;
-        this.token = token;
     }
     async PullAllAsync(){
         const authDocs = await this.collection.get();
@@ -21,6 +20,9 @@ export class Auth{
             docs.push({id: doc.id, data: doc.data()})
         })
         return docs
+    }
+    private GenerateJwt(){
+        return jwt.sign({"foo":"bar"}, "secret", {expiresIn: '25MIN'} )
     }
     private GenerateRandomToken(){
        return Math.floor(10000000 + Math.random() * 90000000);
@@ -41,7 +43,9 @@ export class Auth{
             expiration: this.expiration
         })
 
-        return auth
+        const updatedAuth = (await this.collection.doc(auth.id).get()).data();
+
+        return {id: auth.id, data: updatedAuth}
     }
     async CreateAsync(){
         const newUser = new User(this.email);
@@ -55,6 +59,7 @@ export class Auth{
         await newUser.PushAsync();
         const userDoc = await newAuth.get();
         const userData = userDoc.data();
+
         return {id: userDoc.id, data: userData};
     }
     async AuthenticateUser(){
