@@ -10,8 +10,9 @@ export class Auth{
     token: number
     expiration: Date
     ref: FirebaseFirestore.DocumentReference
-    constructor(email: string, token?: string){
+    constructor(email: string, token?: number){
         this.email = email;
+        token ? this.token = token : null
     }
     async PullAllAsync(){
         const authDocs = await this.collection.get();
@@ -28,29 +29,25 @@ export class Auth{
        return Math.floor(10000000 + Math.random() * 90000000);
     }
     async FindOrCreateAsync(){
-        const data = await this.PullAllAsync();
-        const auth = data.find(e => e.data.email === this.email);
-        if(auth == undefined){
+        const snapshot = await this.collection.where("email", "==", this.email).limit(1).get();
+        if (snapshot.empty) {
             const newAuth = await this.CreateAsync();
-            return newAuth
+            return newAuth;
         }
-
         this.token = this.GenerateRandomToken();
         this.expiration = addMinutes(new Date(), 5);
-
-        await this.collection.doc(auth.id).update({
+        const authRef = snapshot.docs[0].ref;
+        await this.collection.doc(authRef.id).update({
             token: this.token,
             expiration: this.expiration
         })
-
-        const updatedAuth = (await this.collection.doc(auth.id).get()).data();
-
-        return {id: auth.id, data: updatedAuth}
+        const updatedAuth = (await this.collection.doc(authRef.id).get()).data();
+        return {id: authRef.id, data: updatedAuth}
     }
     async CreateAsync(){
-        const newUser = new User(this.email);
         this.token = this.GenerateRandomToken();
         this.expiration = addMinutes(new Date(), 5);
+        const newUser = new User(this.email);
         const newAuth = await this.collection.add({
             email: this.email,
             token: this.token,
@@ -59,24 +56,20 @@ export class Auth{
         await newUser.PushAsync();
         const userDoc = await newAuth.get();
         const userData = userDoc.data();
-
         return {id: userDoc.id, data: userData};
     }
-    async AuthenticateUser(){
-        const dateNow = new Date();
-        const allAuths = await this.PullAllAsync();
-        const authDoc = allAuths.find((e) =>{return e.data.email == this.email});
-        const expiration = (authDoc.data.expiration).toDate() as Date;
-
-        //chequeo si el token no esta vencido
-        if(dateNow >= expiration){
-            console.log("Expirado")
-            throw new Error("Token expirado");
+    async AuthenticateUser() {
+        const snapshot = await this.collection.where("email", "==", this.email).limit(1).get();
+        if (snapshot.empty) {
+            throw new Error("Usuario no encontrado");
         }
-        else{
-            const jwt = this.GenerateJwt();
-            console.log(jwt)
-            return jwt;
+        const authDoc = snapshot.docs[0].data();
+        const expiration = authDoc.expiration.toDate() as Date;
+        const token = authDoc.token as number;
+        const now = new Date();
+        if (token != this.token || now >= expiration) {
+            throw new Error("Token expirado o inválido");
         }
+        return this.GenerateJwt();
     }
 }

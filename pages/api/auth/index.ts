@@ -6,7 +6,6 @@ import sendgrid from "../../../lib/sendgrid";
 export default methods({
     async post(req: NextApiRequest, res: NextApiResponse){
         const email = req.body.email;
-        // sendgrid()
         res.send(await createAuthAsync(email));
     }
 })
