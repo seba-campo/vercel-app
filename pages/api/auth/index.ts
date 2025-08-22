@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import * as methods from "micro-method-router";
-import { FindOrCreateAsyncController } from "../../../controllers/auth";
+import { getAllRoomsAsync, createAuthAsync } from "../../../controllers/auth";
+import sendgrid from "../../../lib/sendgrid";
 
 export default methods({
     async post(req: NextApiRequest, res: NextApiResponse){
         const email = req.body.email;
-        console.log(email)
-        res.send(FindOrCreateAsyncController(email));
+        // sendgrid()
+        res.send(await createAuthAsync(email));
     }
 })

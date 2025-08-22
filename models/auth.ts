@@ -1,14 +1,13 @@
 import fs from "../lib/firebase";
 import * as jwt from "jsonwebtoken"
+import { addMinutes } from "date-fns";
 import { User } from "./user";
-import { Mail } from "./mail";
-import { addMinutes, addMilliseconds } from "date-fns";
-import { timeStamp } from "console";
+
 
 export class Auth{
     collection = fs.collection("auth");
     email: string
-    token: string
+    token: number
     expiration: Date
     ref: FirebaseFirestore.DocumentReference
     constructor(email: string, token?: string){
@@ -16,63 +15,47 @@ export class Auth{
         this.token = token;
     }
     async PullAllAsync(){
-        const roomDocs = await this.collection.get();
-        var rooms = [];
-        roomDocs.forEach(doc => {
-            rooms.push({id: doc.id, data: doc.data()})
+        const authDocs = await this.collection.get();
+        var docs = [];
+        authDocs.forEach(doc => {
+            docs.push({id: doc.id, data: doc.data()})
         })
-        return rooms
+        return docs
     }
-    async UpdateAsync(){
-        const authDoc = await this.ref.update({
-            token: this.token,
-            expiration: this.expiration
-        })
-        if(authDoc){
-            console.log("User updated")
-        }
-    }
-    private GenerateJwt(){
-       return jwt.sign({data: {
-        email: this.email,
-        ref: this.ref
-       }}, 'secret', { expiresIn: '25MIN' });
-    }
-    private GenerateToken(){
-        const token =  Math.floor(100000 + Math.random() * 900000).toString();
-        const expDate = addMinutes(new Date(), 25);
-        this.token = token;
-        this.expiration = expDate;
+    private GenerateRandomToken(){
+       return Math.floor(10000000 + Math.random() * 90000000);
     }
     async FindOrCreateAsync(){
         const data = await this.PullAllAsync();
-        const auth = data.find((e) =>{return e.data.email == this.email});
-        this.GenerateToken();
-        const mailInstance = new Mail(this.email, "Acceso", this.token);
-        if(auth){
-            this.ref = this.collection.doc(auth.id);    
-            console.log("Logeando User")
-            await this.UpdateAsync();
-            await mailInstance.SendAsync();
-            return auth.data
+        const auth = data.find(e => e.data.email === this.email);
+        if(auth == undefined){
+            const newAuth = await this.CreateAsync();
+            return newAuth
         }
-        else{
-            console.log("CreandoUser")
-            const userId =  await this.CreateAsync();
-            await mailInstance.SendAsync();
-            return userId
-        }
+
+        this.token = this.GenerateRandomToken();
+        this.expiration = addMinutes(new Date(), 5);
+
+        await this.collection.doc(auth.id).update({
+            token: this.token,
+            expiration: this.expiration
+        })
+
+        return auth
     }
     async CreateAsync(){
         const newUser = new User(this.email);
+        this.token = this.GenerateRandomToken();
+        this.expiration = addMinutes(new Date(), 5);
         const newAuth = await this.collection.add({
             email: this.email,
             token: this.token,
             expiration: this.expiration
         })
         await newUser.PushAsync();
-        this.ref = newAuth
-        return newAuth.id;
+        const userDoc = await newAuth.get();
+        const userData = userDoc.data();
+        return {id: userDoc.id, data: userData};
     }
     async AuthenticateUser(){
         const dateNow = new Date();

@@ -1,4 +1,5 @@
 import { Auth } from "../models/auth";
+import { Mail } from "../models/mail";
 import auth from "../pages/api/auth";
 
 export async function getAllRoomsAsync(){
@@ -6,7 +7,15 @@ export async function getAllRoomsAsync(){
     return await authInstance.PullAllAsync()
 }
 
-export async function FindOrCreateAsyncController(email: string){
-    const authInstance = new Auth(email);
-    return await authInstance.FindOrCreateAsync()
+export async function createAuthAsync(email: string){
+    try{
+        const authInstance = new Auth(email);
+        const mailInstance = new Mail();
+        const authDoc = await authInstance.FindOrCreateAsync()
+        await mailInstance.SendTokenByEmailAsync(authDoc.data.token, authDoc.data.email)
+
+        return authDoc
+    }catch(e){
+        throw new Error(e)
+    }
 }
