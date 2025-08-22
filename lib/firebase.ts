@@ -1,6 +1,4 @@
 import * as admin from "firebase-admin";
-//Se verifica que la app ya se haya inicializado
-
 const serviceAccount = {
     "type": process.env.TYPE,
   "project_id": process.env.PROJECT_ID,
