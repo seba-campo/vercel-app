@@ -888,7 +888,7 @@ const products = [
 
 export const syncData = async function (){
     products.forEach(async (e)=>{
-        const index = algolia.initIndex("myIndex");
+        const index = algolia.initIndex("products");
         await index.saveObject(e, {autoGenerateObjectIDIfNotExist: true}).wait()
     })
 

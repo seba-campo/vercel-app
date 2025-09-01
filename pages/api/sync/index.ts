@@ -6,7 +6,7 @@ export default methods({
     async post(req: NextApiRequest, res: NextApiResponse){
         var queryParams = req.query;
         const sync = await syncData();
-        res.send("ok")
+        res.send(sync)
         // airtableBase('Furniture').select({}).eachPage(async function page(records, fetchNextPage) {
         //     // This function (`page`) will get called for each page of records.
         //     var objects = records.map((r)=>{
