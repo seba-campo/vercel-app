@@ -1,9 +1,8 @@
-import { SearchClient } from "algoliasearch";
 import algoliasearch from "algoliasearch";
 
 const appID = process.env.ALGOLIA_APP_ID;
 const apiKey = process.env.ALGOLIA_API_KEY;
-export const algolia = algoliasearch(appID, apiKey);
+export const algoliaContext = algoliasearch(appID, apiKey);
 
 const products = [
   {
@@ -888,7 +887,7 @@ const products = [
 
 export const syncData = async function (){
     products.forEach(async (e)=>{
-        const index = algolia.initIndex("products");
+        const index = algoliaContext.initIndex("products");
         await index.saveObject(e, {autoGenerateObjectIDIfNotExist: true}).wait()
     })
 

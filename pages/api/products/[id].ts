@@ -8,7 +8,12 @@ import { getProductByIdAsync } from "../../../controllers/productController";
 export default methods({
     get: authorization(async(req: NextApiRequest, res: NextApiResponse) => {
         const productId = req.query.id as string;
-        const product = await getProductByIdAsync(productId);
-        res.json(product)  
+        try{
+            const product = await getProductByIdAsync(productId);
+            res.json(product)  
+        }
+        catch(e){
+            res.status(404).json(e);
+        }
     })
 })

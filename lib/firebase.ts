@@ -1,4 +1,6 @@
 import * as admin from "firebase-admin";
+
+
 const serviceAccount = {
     "type": process.env.TYPE,
   "project_id": process.env.PROJECT_ID,
@@ -21,4 +23,15 @@ if(!admin.apps.length) {
     });
 }
 const fs = admin.firestore();
-export default fs
+const PRODUCT_COLLECTION = fs.collection("products");
+const ORDER_COLLECTION = fs.collection("orders");
+const AUTH_COLLECTION = fs.collection("auth");
+const USER_COLLECTION = fs.collection("users");
+
+export {
+  fs, 
+  PRODUCT_COLLECTION, 
+  ORDER_COLLECTION,
+  AUTH_COLLECTION,
+  USER_COLLECTION
+} 
