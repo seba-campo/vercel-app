@@ -21,12 +21,31 @@ export async function getProductByIdAsync(id: string) {
 }
 
 export async function getProductByQuery(query: string, limit: number, offset: number){
-    const results = await algoliaContext.search([
-        {
-            indexName: "products",
-            query: "Batería de",
-        },
-    ]);
+    const algoliaSearch = await searchProductsInAlgolia(query, limit, offset);
+    if(algoliaSearch.results.length == 0) return;
 
-    return results
+    var productsFirebase = []
+    for (const id of algoliaSearch.results) {
+        console.log(id)
+        productsFirebase.push(await getProductByIdAsync(id));
+    }
+
+    return {results: productsFirebase, total: algoliaSearch.total}
+}
+
+async function searchProductsInAlgolia(query: string, limit: number, offset: number){
+    const results = await algoliaContext.search([
+            {
+                indexName: "products",
+                query: query      
+            },
+        ]);
+    const resultsPaged = results.results[0].hits
+    .slice(offset, offset + limit);
+    var resultsId = [];
+    resultsPaged.forEach(element => {
+        resultsId.push(element.id)
+    });
+
+    return {results: resultsId, total: results.results[0].nbHits};
 }
