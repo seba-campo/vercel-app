@@ -40,7 +40,10 @@ async function searchProductsInAlgolia(query: string, limit: number, offset: num
                 query: query      
             },
         ]);
-    const resultsPaged = results.results[0].hits
+
+    const hits = (results.results[0].hits as any[]) ?? [];
+    const totals = (results.results[0].nbHits as any[]) ?? [];
+    const resultsPaged = hits
     .slice(offset, offset + limit);
     var resultsId = [];
     resultsPaged.forEach(element => {

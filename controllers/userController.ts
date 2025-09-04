@@ -1,3 +1,4 @@
+import { AUTH_COLLECTION } from "../lib/firebase";
 import { User } from "../models/user";
 
 export async function updateUserAddressAsync(email: string, newAddress: string){
@@ -22,4 +23,12 @@ export async function getUserDataAsync(email: string){
         throw new Error(e);
     }
 
+}
+
+export async function getUserByIdAsync(id: string){
+    const userDoc = await AUTH_COLLECTION.doc(id).get();
+    if(!userDoc.exists) return;
+
+    const userData = userDoc.data();
+    return userData;
 }
