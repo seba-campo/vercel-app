@@ -1,5 +1,5 @@
 import { add } from "date-fns";
-import fs from "../lib/firebase";
+import { fs } from "../lib/firebase";
 export class User{
     collection = fs.collection("users");
     private ref: FirebaseFirestore.DocumentReference

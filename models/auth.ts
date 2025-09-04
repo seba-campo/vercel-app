@@ -1,4 +1,4 @@
-import fs from "../lib/firebase";
+import { fs } from "../lib/firebase";
 import * as jwt from "jsonwebtoken"
 import { addMinutes } from "date-fns";
 import { User } from "./user";

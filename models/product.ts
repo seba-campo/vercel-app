@@ -1,4 +1,4 @@
-import fs from "../lib/firebase";
+import { fs } from "../lib/firebase";
 
 export interface ProductVariant {
   color: string;
