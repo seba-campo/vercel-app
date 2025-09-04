@@ -39,7 +39,7 @@ async function searchProductsInAlgolia(query: string, limit: number, offset: num
                 indexName: "products",
                 query: query      
             },
-        ]);
+        ]) as any;
 
     const hits = (results.results[0].hits as any[]) ?? [];
     const totals = (results.results[0].nbHits as any[]) ?? [];
