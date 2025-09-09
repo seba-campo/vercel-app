@@ -12,7 +12,8 @@ export async function generateOrderAndPaymentAsync(productId: string, userId: st
         userId: userId,
         productId: productId,
         status: "pending",
-        paymentUrl: ""
+        paymentUrl: "",
+        paymentId: "this is test"
     });
     
     
@@ -25,7 +26,9 @@ export async function generateOrderAndPaymentAsync(productId: string, userId: st
     })
 
     await newOrderDoc.update({
-        paymentUrl:  productOrder.init_point
+        paymentUrl:  productOrder.sandbox_init_point,
+        paymentId: productOrder.id,
+        clientId: productOrder.client_id
     })
 
     const orderData = (await ORDER_COLLECTION.doc(newOrderDoc.id).get()).data();

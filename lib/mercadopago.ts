@@ -4,7 +4,7 @@ import { MercadoPagoConfig, Payment, Preference } from "mercadopago";
 // Step 2: Initialize the client object
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_TOKEN as string,
-  options: { timeout: 5000, idempotencyKey: "abc" },
+  options: { timeout: 5000 } 
 });
 
 const BASE_URL = process.env.VERCEL_URL || "apx.school";
@@ -52,7 +52,7 @@ export async function createSingleProductPreference(
       // Esto puede ser el id o algún otro identificador
       // que te ayude a vincular este pago con el producto más adelante
       external_reference: options.transactionId,
-      notification_url: 'http://localhost:4004/api/webhooks/mp'
+      // notification_url: 'http://localhost:4004/api/webhooks/mp',
     },
   });
 }
