@@ -4,7 +4,7 @@ import { MercadoPagoConfig, Payment, Preference } from "mercadopago";
 // Step 2: Initialize the client object
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_TOKEN as string,
-  options: { timeout: 5000 } 
+  options: { timeout: 5000, idempotencyKey:"ABC" } 
 });
 
 const BASE_URL = process.env.VERCEL_URL || "apx.school";

@@ -12,6 +12,7 @@ export async function generateOrderAndPaymentAsync(productId: string, userId: st
         userId: userId,
         productId: productId,
         status: "pending",
+        paymentSandboxUrl: "",
         paymentUrl: "",
         paymentId: "this is test"
     });
@@ -26,7 +27,8 @@ export async function generateOrderAndPaymentAsync(productId: string, userId: st
     })
 
     await newOrderDoc.update({
-        paymentUrl:  productOrder.sandbox_init_point,
+        paymentUrl:  productOrder.init_point,
+        paymentSandboxUrl:  productOrder.sandbox_init_point,
         paymentId: productOrder.id,
         clientId: productOrder.client_id
     })
