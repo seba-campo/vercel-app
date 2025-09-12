@@ -13,7 +13,7 @@ export default methods({
             if (mpPayment.status === "approved") {
                 console.log(`Payment ${mpPayment.id} approved`);
                 const purchaseId = mpPayment.external_reference;
-                res.send({message: "ok", purchase: purchaseId})
+                res.send(200)
              }
         }
         else{
