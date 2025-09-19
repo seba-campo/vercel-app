@@ -2,6 +2,8 @@
 
 This is a Next.js project that provides a backend API for an e-commerce platform.
 
+[PostmanDocs](https://documenter.getpostman.com/view/23923667/2sB3HtEc7r)
+
 ## Features
 
 *   User authentication with email and tokens.
