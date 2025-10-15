@@ -1,3 +1,9 @@
+import Layout from "../../components/layout";
+
 export default function Login(){
-    return <div>Hola desde Login</div>
+    return (
+        <Layout>
+            <div>Hola soy el Login</div>
+        </Layout>
+    )
 }
