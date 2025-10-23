@@ -1,6 +1,6 @@
 export async function fetchAPI(path: string, headers: Headers){
     const defaultURL = "http://localhost:3000/api";
-    var response;
+    var response: string;
     if(!path) return; 
 
     const tokenStored = localStorage.getItem("accessToken");
@@ -18,7 +18,8 @@ export async function fetchAPI(path: string, headers: Headers){
             return res.json();
         }
     }).then((data)=>{
-        response = data
+        console.log("DATA: ", data)
+        response += data
     })
     return response;
 }

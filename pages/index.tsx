@@ -4,17 +4,18 @@ import { useMe } from "../lib/hooks"
 
 
 export default function App(){
-    const me = useMe();
+    const userData = useMe();
     const [token, setToken] = useState('');
     async function onHandleButton() {
-        setToken(await me)
+        var newUserData = await userData;
+        console.log(newUserData)
     }
     return (
         <Layout>
             <div>Soy la main page</div>
             <button onClick={onHandleButton}>Get info</button>
             <div>
-                {token ?? <p>{token}</p>}
+                {token}
             </div>
         </Layout>
     )
