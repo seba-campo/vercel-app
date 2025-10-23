@@ -11,7 +11,7 @@ export async function createAuthAsync(email: string){
     const mailInstance = new Mail();
     try{
         const authDoc = await authInstance.FindOrCreateAsync()
-        await mailInstance.SendTokenByEmailAsync(authDoc.data.token, authDoc.data.email)
+        // await mailInstance.SendTokenByEmailAsync(authDoc.data.token, authDoc.data.email)
         return authDoc
     }catch(e){
         throw new Error("Ocurrió un error al validar el usuario");
