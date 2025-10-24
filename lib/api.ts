@@ -5,21 +5,16 @@ export async function fetchAPI(path: string, headers: Headers){
 
     const tokenStored = localStorage.getItem("accessToken");
 
-    fetch(defaultURL+path, {
+    const res = await fetch(defaultURL + path, {
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': tokenStored
-        }
-    }).then((res)=>{
-        if(res.status != 200){
-            throw "Ocurrió un error al intentar contactarse con la api."
-        }
-        else{
-            return res.json();
-        }
-    }).then((data)=>{
-        console.log("DATA: ", data)
-        response += data
-    })
-    return response;
+        "Content-Type": "application/json",
+        "Authorization": tokenStored || "",
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error("Error al intentar contactarse con la API");
+    }
+
+    return await res.json();
 }
