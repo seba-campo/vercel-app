@@ -11,6 +11,7 @@
     "next": "^15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "styled-components": "^6.1.19",
     "swr": "^2.3.6"
   },
   "scripts": {
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@types/node": "22.15.17",
     "@types/react": "19.1.4",
+    "@types/styled-components": "^5.1.36",
     "net": "^1.0.2",
     "typescript": "5.8.3"
   }
