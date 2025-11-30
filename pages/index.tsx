@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Layout from "../components/Layout"
-import { useMe } from "../lib/hooks"
+import HomePage from "../components/Home/Home"
 
 
 export default function App() {
   return (
     <Layout>
-      <div>Soy la main page</div>
+      <HomePage></HomePage>
     </Layout>
   );
 }

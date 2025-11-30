@@ -1,12 +1,13 @@
 import { useState, FormEvent } from 'react';
-import * as S from './styles';
+import { SearchForm, SearchInput, SearchButton } from './styles';
 
 interface SearchBarProps {
     onSearch?: (query: string) => void;
     placeholder?: string;
+    variant?: 'primary' | 'secondary';
 }
 
-export default function SearchBar({ onSearch, placeholder = "Reloj" }: SearchBarProps) {
+export default function SearchBar({ onSearch, placeholder = "Reloj", variant = 'primary' }: SearchBarProps) {
     const [query, setQuery] = useState('');
 
     const handleSubmit = (e: FormEvent) => {
@@ -17,16 +18,16 @@ export default function SearchBar({ onSearch, placeholder = "Reloj" }: SearchBar
     };
 
     return (
-        <S.SearchForm onSubmit={handleSubmit}>
-            <S.SearchInput
+        <SearchForm onSubmit={handleSubmit} $variant={variant}>
+            <SearchInput
                 type="text"
                 placeholder={placeholder}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
             />
-            <S.SearchButton type="submit">
+            <SearchButton type="submit" $variant={variant}>
                 Buscar
-            </S.SearchButton>
-        </S.SearchForm>
+            </SearchButton>
+        </SearchForm>
     );
 }

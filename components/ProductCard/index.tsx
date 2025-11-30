@@ -1,4 +1,4 @@
-import * as S from './styles';
+import { Card, ImageContainer, Image, Info, Name, Price } from './styles';
 
 interface ProductCardProps {
     id: string;
@@ -16,7 +16,7 @@ export default function ProductCard({ id, name, price, imageUrl, onClick }: Prod
     }).format(price);
 
     return (
-        <S.Card
+        <Card
             onClick={() => onClick?.(id)}
             role="button"
             tabIndex={0}
@@ -26,16 +26,16 @@ export default function ProductCard({ id, name, price, imageUrl, onClick }: Prod
                 }
             }}
         >
-            <S.ImageContainer>
-                <S.Image
+            <ImageContainer>
+                <Image
                     src={imageUrl}
                     alt={name}
                 />
-            </S.ImageContainer>
-            <S.Info>
-                <S.Name>{name}</S.Name>
-                <S.Price>{formattedPrice}</S.Price>
-            </S.Info>
-        </S.Card>
+            </ImageContainer>
+            <Info>
+                <Name>{name}</Name>
+                <Price>{formattedPrice}</Price>
+            </Info>
+        </Card>
     );
 }

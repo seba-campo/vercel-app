@@ -14,17 +14,26 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: 481px){
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 export const Links = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  font-family: 'Inter', sans-serif;
 
   a {
     color: white;
     text-decoration: none;
-    font-size: 0.95rem;
+    width: fit-content;
+    font-size: 16px;
+    font-weight: 400;
     transition: color 0.3s ease;
 
     &:hover {
@@ -37,6 +46,9 @@ export const Social = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
 `;
 
 export const SocialTitle = styled.h4`

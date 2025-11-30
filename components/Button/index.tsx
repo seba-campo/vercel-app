@@ -1,5 +1,5 @@
 import { ReactNode, ButtonHTMLAttributes } from 'react';
-import * as S from './styles';
+import { StyledButton } from './styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'tertiary' | 'outline';
@@ -14,12 +14,12 @@ export default function Button({
     ...props
 }: ButtonProps) {
     return (
-        <S.StyledButton
+        <StyledButton
             $variant={variant}
             $fullWidth={fullWidth}
             {...props}
         >
             {children}
-        </S.StyledButton>
+        </StyledButton>
     );
 }

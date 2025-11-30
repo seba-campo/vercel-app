@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import * as S from './styles';
+import { Container, ResultsText, Grid, ViewMore } from './styles';
 
 interface ProductGridProps {
     children: ReactNode;
@@ -10,20 +10,20 @@ interface ProductGridProps {
 
 export default function ProductGrid({ children, resultsCount, totalCount, onViewMore }: ProductGridProps) {
     return (
-        <S.Container>
+        <Container>
             {resultsCount !== undefined && totalCount !== undefined && (
-                <S.ResultsText>
+                <ResultsText>
                     {resultsCount} resultados de {totalCount}
-                </S.ResultsText>
+                </ResultsText>
             )}
-            <S.Grid>
+            <Grid>
                 {children}
-            </S.Grid>
+            </Grid>
             {onViewMore && (
-                <S.ViewMore onClick={onViewMore}>
+                <ViewMore onClick={onViewMore}>
                     ver más &gt;
-                </S.ViewMore>
+                </ViewMore>
             )}
-        </S.Container>
+        </Container>
     );
 }

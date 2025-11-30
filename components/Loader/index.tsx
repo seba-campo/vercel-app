@@ -1,4 +1,4 @@
-import * as S from './styles';
+import { LoaderContainer, Spinner, DotsContainer, Dot, LoaderText } from './styles';
 
 interface LoaderProps {
     fullScreen?: boolean;
@@ -14,17 +14,17 @@ export default function Loader({
     variant = 'spinner'
 }: LoaderProps) {
     return (
-        <S.LoaderContainer $fullScreen={fullScreen}>
+        <LoaderContainer $fullScreen={fullScreen}>
             {variant === 'spinner' ? (
-                <S.Spinner $size={size} />
+                <Spinner $size={size} />
             ) : (
-                <S.DotsContainer>
-                    <S.Dot $delay={0} $color="#E91E63" />
-                    <S.Dot $delay={0.2} $color="#FFC107" />
-                    <S.Dot $delay={0.4} $color="#5C7CFA" />
-                </S.DotsContainer>
+                <DotsContainer>
+                    <Dot $delay={0} $color="#E91E63" />
+                    <Dot $delay={0.2} $color="#FFC107" />
+                    <Dot $delay={0.4} $color="#5C7CFA" />
+                </DotsContainer>
             )}
-            {text && <S.LoaderText>{text}</S.LoaderText>}
-        </S.LoaderContainer>
+            {text && <LoaderText>{text}</LoaderText>}
+        </LoaderContainer>
     );
 }

@@ -114,7 +114,66 @@ export const Hamburger = styled.div<{ $isOpen: boolean }>`
 `;
 
 export const MobileMenu = styled.div`
+  font-family: 'Inter', sans-serif;
   padding: 1rem;
-  background-color: #1a1a1a;
+  background-color: #000000;
   border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 620px;
+  flex-direction: column;
+  gap: 1rem;
+
+  .options{
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly
+  }
+
+  p {
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #2a2a2a;
+      transform: translateX(4px);
+      color: #FFC107;
+    }
+  }
+`;
+
+export const MobileSessionInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+
+  .session-email{
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+  }
+  
+  .session-action{
+    color: #E75A7C;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+  }
 `;
