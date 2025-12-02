@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import Layout from "../../components/layout";
+import Layout from "../../components/Layout";
 import { ProductDetail } from "../../components/product";
 
 export default function Product(){

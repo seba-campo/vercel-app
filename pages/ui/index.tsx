@@ -1,7 +1,7 @@
 'use-client'
 import React from "react"
 import {Button, SecondaryButton, OutlinedButton} from "../../ui/button/button"
-import Layout from "../../components/layout"
+import Layout from "../../components/Layout"
 
 export default function Ui(){
     return (
