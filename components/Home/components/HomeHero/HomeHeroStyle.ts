@@ -19,4 +19,8 @@ export const HomeWrapper = styled.div`
         font-size: 20px;
     }
     }
+
+    .search{
+        margin-top: 1rem
+    }
 `

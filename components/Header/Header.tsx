@@ -19,12 +19,11 @@ export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const {
-        onSearch,
+        isLogged,
         onLoginClick,
         onProfileClick,
         onCloseSessionClick,
         onSearchClick,
-        isLogged,
     } = useHeader();
 
     return (
