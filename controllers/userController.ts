@@ -22,7 +22,6 @@ export async function getUserDataAsync(email: string){
     catch(e){
         throw new Error(e);
     }
-
 }
 
 export async function getUserByIdAsync(id: string){

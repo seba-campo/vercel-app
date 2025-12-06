@@ -1,9 +1,11 @@
-import HomeMainSection from "./components/HomeHero"
+import HomeHero from "./components/HomeHero/HomeHero"
+import { FeaturedProducts } from "./components/FeaturedProducts/FeaturedProducts"
 
 export default function HomePage() {
     return (
         <div>
-            <HomeMainSection />
+            <HomeHero />
+            <FeaturedProducts />
         </div>
     )
 }

@@ -1,26 +1,31 @@
-import * as sgMail from "@sendgrid/mail"
+import * as sgMail from "@sendgrid/mail";
+import { msClient, msSender } from "../lib/mailersend";
+import { MailerSend, EmailParams, Sender, Recipient} from "mailersend";
 
 export class Mail {
     sgApp: sgMail.MailService
-    private from: string = process.env.SENDGRID_EMAIL_SENDER
-    constructor(){
-       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    recipients: Recipient[]
+    private subject: string = "Token de acceso"
+    constructor(recipientMail?: string){
+        if(!recipientMail) return;
+        this.SetNewRecipient(recipientMail)
     }
-    async SendTokenByEmailAsync(token: number, sendTo: string){
-        const msj = {
-            subject: 'Token de acceso',
-            text: 'Token de acceso',
-            html: `<strong>TOKEN: ${token}</strong>`,
-            to: sendTo,
-            from: this.from
-        }
+    SetNewRecipient(recipientMail: string){
+        this.recipients.push(new Recipient(recipientMail));
+    }
+    async SendTokenByEmailAsync(token: number){
+        const mail = new EmailParams()
+            .setFrom(msSender)
+            .setTo(this.recipients)
+            .setReplyTo(msSender)
+            .setSubject(this.subject)
+            .setText(`El token de acceso es: ${token}`)
+
         try{
-            const sendMailAttempt = await sgMail.send(msj);
-            return sendMailAttempt[0].statusCode == 200 ?  true : false;
+            await msClient.email.send(mail)   
         }
         catch(e){
-            throw new Error(e);
+            console.log(e)
         }
-
     }
 }

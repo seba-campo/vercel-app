@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function useHeader() {
     const [isLogged, setIsLogged] = useState(false);
+    const router = useRouter();
 
     const onSearch = () => {
         console.log('search')
@@ -12,6 +14,7 @@ export default function useHeader() {
     }
 
     const onLoginClick = () => {
+        router.push('/signin');
     }
 
     const onProfileClick = () => {
