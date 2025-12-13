@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
+import { QueryProvider } from '../lib/QueryProvider';
 
 export default function App({ Component, pageProps }: AppProps) {
     const [mounted, setMounted] = useState(false);
@@ -12,5 +13,11 @@ export default function App({ Component, pageProps }: AppProps) {
         return null;
     }
 
-    return <Component {...pageProps} />;
+    return (
+        <QueryProvider>
+            <Component {...pageProps} />
+        </QueryProvider>
+    );
 }
+
+
