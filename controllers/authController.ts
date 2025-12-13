@@ -1,19 +1,19 @@
 import { Auth } from "../models/auth";
 import { Mail } from "../models/mail";
 
-export async function getAllRoomsAsync(){
+export async function getAllRoomsAsync() {
     const authInstance = new Auth("testdt");
     return await authInstance.PullAllAsync()
 }
 
-export async function createAuthAsync(email: string){
+export async function createAuthAsync(email: string) {
     const authInstance = new Auth(email);
-    const mailInstance = new Mail();
-    try{
+    const mailInstance = new Mail(email);
+    try {
         const authDoc = await authInstance.FindOrCreateAsync()
-        // await mailInstance.SendTokenByEmailAsync(authDoc.data.token, authDoc.data.email)
+        await mailInstance.SendTokenByEmailAsync(authDoc.data.token)
         return authDoc
-    }catch(e){
+    } catch (e) {
         throw new Error("Ocurrió un error al validar el usuario");
     }
 }

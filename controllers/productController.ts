@@ -1,5 +1,4 @@
-import { Product } from "../models/product";
-import { fs, PRODUCT_COLLECTION } from "../lib/firebase";
+import { PRODUCT_COLLECTION } from "../lib/firebase";
 import { algoliaContext } from "../lib/algolia";
 
 

@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
-import Layout from "../../components/Layout";
-import { ProductDetail } from "../../components/product";
+import Layout from "../../components/Layout";;
 
-export default function Product(){
+export default function Product() {
     const router = useRouter();
     const { id } = router.query;
 
-    if(!id) return (<Layout> <div>No se indicó ningun id</div></Layout>)
+    if (!id) return (<Layout> <div>No se indicó ningun id</div></Layout>)
 
     return (
         <Layout>
@@ -14,7 +13,6 @@ export default function Product(){
             <p>---------------------------</p>
             <div>
                 <p>Producto:</p>
-                <ProductDetail id={id}></ProductDetail>
             </div>
         </Layout>
     )

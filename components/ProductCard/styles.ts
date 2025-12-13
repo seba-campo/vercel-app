@@ -42,6 +42,7 @@ export const Info = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
+  height: 90px;
 `;
 
 export const Name = styled.h3`
