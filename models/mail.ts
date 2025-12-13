@@ -22,8 +22,7 @@ export class Mail {
             .setText(`El token de acceso es: ${token}`)
 
         try {
-            const response = await msClient.email.send(mail)
-            console.log('Email enviado exitosamente:', response)
+            await msClient.email.send(mail)
             return true
         }
         catch (e) {
