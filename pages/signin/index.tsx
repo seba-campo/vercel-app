@@ -15,8 +15,7 @@ export default function SignIn() {
 
     return (
         <Layout>
-            <div style={{ maxWidth: "400px", margin: "0 auto", padding: "2rem" }}>
-                
+            <div style={{ maxWidth: "400px", margin: "0 auto", padding: "2rem" }}>     
                 <FormWrapper>
                     <h1>Ingresar</h1>
                     <form onSubmit={handleSubmit}>

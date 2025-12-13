@@ -1,4 +1,3 @@
-import { add } from "date-fns";
 import { fs } from "../lib/firebase";
 export class User{
     collection = fs.collection("users");
@@ -8,7 +7,12 @@ export class User{
     apellido: string = "Bar"
     address: string
     email: string
-    constructor(email: string, nombre?: string, apellido?: string, address?: string){
+    constructor(
+        email: string,
+        nombre?: string,
+        apellido?: string,
+        address?: string
+    ){
         this.email = email;
         if(nombre && apellido){
             this.nombre = nombre;
@@ -46,20 +50,17 @@ export class User{
             address: this.address
         })
     }
-    async GetUserByEmailAsync() {
-    const snapshot = await this.collection.where("email", "==", this.email).limit(1).get();
+    async GetUserByEmailAsync(){
+        const snapshot = await this.collection.where("email", "==", this.email).limit(1).get();
+        if (snapshot.empty) return null; // No se encontró el usuario
 
-    if (snapshot.empty) {
-        return null; // No se encontró el usuario
-    }
-
-    const doc = snapshot.docs[0];
-    const docData = doc.data();
-    this.nombre = docData.nombre;
-    this.apellido = docData.apellido;
-    this.address = docData.address;
-    this.ref = doc.ref;
-    this.userId = doc.id;
-    return { id: doc.id, ...doc.data() };
+        const doc = snapshot.docs[0];
+        const docData = doc.data();
+        this.nombre = docData.nombre;
+        this.apellido = docData.apellido;
+        this.address = docData.address;
+        this.ref = doc.ref;
+        this.userId = doc.id;
+        return { id: doc.id, ...doc.data() };
     }
 }
