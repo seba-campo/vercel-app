@@ -3,11 +3,14 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { formatAndValidateEmail } from "../../utils/validateEmail";
 import { formatSetNewToken } from "../../utils/tokenStorage";
+import { authTokenState } from "../../store/atoms";
+import { useSetRecoilState } from "recoil";
 
 export const useSignIn = () => {
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
     const [isVerifyCode, setIsVerifyCode] = useState(false);
+    const setAuthTokenState = useSetRecoilState(authTokenState);
 
     const router = useRouter();
 
@@ -19,7 +22,9 @@ export const useSignIn = () => {
     } = useMutation({
         mutationFn: (email: string) => {
             const formattedEmail = formatAndValidateEmail(email);
-            if (!formattedEmail) return;
+            if (!formattedEmail){
+                throw new Error("Invalid email");
+            };
             return fetch("/api/auth", {
                 method: "POST",
                 headers: {
@@ -32,8 +37,8 @@ export const useSignIn = () => {
             console.log("Auth success:", dataLogin);
             setIsVerifyCode(true);
         },
-        onError: (error) => {
-            alert(error);
+        onError: (error: Error) => {
+            alert(error.message);
         }
     });
 
@@ -62,9 +67,10 @@ export const useSignIn = () => {
 
             return res.json();
         },
-        onSuccess: (dataVerifyCode) => {
+        onSuccess: (data) => {
+            setAuthTokenState(data.token)
             setIsVerifyCode(false);
-            formatSetNewToken(dataVerifyCode);
+            formatSetNewToken(data.token);
             router.push("/");
         },
         onError: (errorVerifyCode) => {

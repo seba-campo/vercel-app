@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { isLoggedState } from "../../store/selectors";
+import { authTokenState } from "../../store/atoms";
 import { useRouter } from "next/router";
 
 export default function useHeader() {
-    const [isLogged, setIsLogged] = useState(false);
+    const isLogged = useRecoilValue(isLoggedState);
+    const [, setAuthToken ] = useRecoilState(authTokenState)
     const router = useRouter();
 
     const onSearch = () => {
@@ -14,7 +17,11 @@ export default function useHeader() {
     }
 
     const onLoginClick = () => {
-        router.push('/signin');
+        if(isLogged){
+            router.push('/profile');
+        }else{
+            router.push('/profile');
+        }
     }
 
     const onProfileClick = () => {
@@ -25,15 +32,9 @@ export default function useHeader() {
         if (!isLogged) return;
 
         // TBD
-        localStorage.removeItem('isLogged');
-        setIsLogged(false);
+        localStorage.removeItem('vapp-token');
+        setAuthToken(null);
     }
-
-    useEffect(() => {
-        // TBD
-        const isLoggedValue = localStorage.getItem('isLogged');
-        setIsLogged(isLoggedValue === 'true');
-    }, []);
 
     return {
         isLogged,

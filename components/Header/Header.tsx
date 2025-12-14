@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import useHeader from './useHeader';
 import Link from 'next/link';
-import SearchBar from '../SearchBar';
 import {
     HeaderContainer,
     Container,
     Logo,
     LogoText,
-    DesktopSearch,
     LoginButton,
     MenuToggle,
     Hamburger,
@@ -38,7 +36,7 @@ export default function Header() {
                 </Logo>
                 {/* Login Button */}
                 <LoginButton onClick={onLoginClick}>
-                    Ingresar
+                    {isLogged ? "Mi perfil" : "Acceder"}
                 </LoginButton>
 
                 {/* Mobile Menu Toggle */}

@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
+import { RecoilRoot } from 'recoil';
 import { QueryProvider } from '../lib/QueryProvider';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -14,9 +15,11 @@ export default function App({ Component, pageProps }: AppProps) {
     }
 
     return (
-        <QueryProvider>
-            <Component {...pageProps} />
-        </QueryProvider>
+        <RecoilRoot>
+            <QueryProvider>
+                <Component {...pageProps} />
+            </QueryProvider>
+        </RecoilRoot>
     );
 }
 

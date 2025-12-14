@@ -1,16 +1,8 @@
 import { atom } from "recoil";
 
-export const isLoggedState = atom({
-    key: "IsLogged",
-    default: false
-})
-
-export const userDataState = atom({
-    key: "UserData",
-    default: {
-        "email": "-",
-        "nombre": "-",
-        "apellido": "-",
-        "address": "-"
-    }
-})
+export const authTokenState = atom<string | null>({
+  key: "AuthToken",
+  default: typeof window !== "undefined"
+    ? localStorage.getItem("vapp-token")
+    : null,
+});

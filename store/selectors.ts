@@ -1,25 +1,25 @@
-import { selector, useRecoilState } from "recoil";
-import { isLoggedState, userDataState } from "./atoms";
+import { selector } from "recoil";
+import { authTokenState } from "./atoms";
 
-const sessionState = selector({
-    key: "SessionState",
-    get: async ({get}) => {
-        const isUserLogged = get(isLoggedState);
-        const [user, setUser]= useRecoilState(userDataState)
+export const userState = selector({
+  key: "UserState",
+  get: async ({ get }) => {
+    if (!get(isLoggedState)) return null;
 
-        if(isUserLogged){
-            const userData = await fetch(process.env.MAIN_API_URL+'/me', {
-                headers: {
-                    'Authorization': localStorage.getItem('vapp-token')
-                }
-            })
-            .then((res) => { return res.json() })
-            .then((data) => { return data });
+    const res = await fetch(`${process.env.MAIN_API_URL}/me`, {
+      headers: {
+        Authorization: localStorage.getItem("vapp-token") ?? "",
+      },
+    });
 
-            const { email, nombre, apellido, address } = userData;
-            setUser({email, nombre, apellido, address});
-        }else{
-            return user;
-        }
-    }
+    return res.json();
+  },
+});
+
+
+export const isLoggedState = selector({
+    key: "IsLogged",
+    get: ({ get }) => {
+        return Boolean(get(authTokenState));
+    },
 })
