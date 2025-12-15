@@ -20,7 +20,7 @@ export default function useHeader() {
         if(isLogged){
             router.push('/profile');
         }else{
-            router.push('/profile');
+            router.push('/signin');
         }
     }
 
