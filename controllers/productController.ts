@@ -14,19 +14,37 @@ export async function getProductByIdAsync(id: string) {
     }
     else {
         throw new Error("Product not found")
-    }
+    };
+}
+
+export async function getFeaturedProductsAsync() {
+    const productsId = [
+        '0ys8U68rrYHzXBOOAVo1', 
+        '3Ly0aZ0nvbFUiDwC40Ze', 
+        '5NK7aKwOQ50VrO4cTJZg', 
+        '5UuOmmHrpfC81JCAzYIW', 
+        '8DasMm48uGInHAuX6SSB',
+        '8I5pFFg41hXbn381rQmF'
+    ];
+
+    var productsFirebase = [];
+    for (const id of productsId) {
+        productsFirebase.push(await getProductByIdAsync(id));
+    };
+
+    return productsFirebase;
 }
 
 export async function getProductByQuery(query: string, limit: number, offset: number) {
     const algoliaSearch = await searchProductsInAlgolia(query, limit, offset);
-    if (algoliaSearch.results.length == 0) return;
+    if (algoliaSearch.results.length == 0) return { results: [], total: 0};
 
-    var productsFirebase = []
+    var productsFirebase = [];
     for (const id of algoliaSearch.results) {
         productsFirebase.push(await getProductByIdAsync(id));
-    }
+    };
 
-    return { results: productsFirebase, total: algoliaSearch.total }
+    return { results: productsFirebase, total: algoliaSearch.total };
 }
 
 async function searchProductsInAlgolia(query: string, limit: number, offset: number) {

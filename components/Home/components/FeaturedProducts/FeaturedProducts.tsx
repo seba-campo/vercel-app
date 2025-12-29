@@ -2,58 +2,60 @@ import { FeaturedProductsWrapper, FeaturedProductsContainer } from "./FeaturedPr
 import Router from "next/router"
 import ProductGrid from "../../../ProductGrid"
 import ProductCard from "../../../ProductCard"
-
-const mockProducts = [{
-    id: 1,
-    name: "Reloj inteligente",
-    price: 79300,
-    imageUrl: "https://via.placeholder.com/150"
-},
-{
-    id: 2,
-    name: "Termo con Bolso",
-    price: 25999,
-    imageUrl: "https://via.placeholder.com/150"
-},
-{
-    id: 3,
-    name: "Ventilador de pie",
-    price: 24000,
-    imageUrl: "https://via.placeholder.com/150"
-},
-{
-    id: 4,
-    name: "Mouse ergonómico inalámbrico",
-    price: 17000,
-    imageUrl: "https://via.placeholder.com/150"
-},
-{
-    id: 5,
-    name: "Reloj Casio",
-    price: 34530,
-    imageUrl: "https://via.placeholder.com/150"
-}]
-
+import { useEffect, useState } from "react"
+import { IProduct } from "../../../../interfaces/product"
+import { useMutation } from "@tanstack/react-query"
 
 export const FeaturedProducts = () => {
+    const [products, setProducts] = useState<IProduct[]>(undefined);
+
+    const {
+        mutate: mutateProducts,
+        isPending,
+        error,
+        data: dataLogin
+    } = useMutation({
+        mutationFn: async () => {
+            if(products) return null;
+
+            const productFetch = fetch("/api/products/featured")
+                .then((res) => res.json())
+                .then((data) => {
+                    setProducts(data.results)
+                });
+            return productFetch
+        },
+        onSuccess: (productsData) => {
+            console.log(products)
+        },
+        onError: (error: Error) => {
+            alert(error.message);
+        }
+    });
+
+    useEffect(() => {
+        mutateProducts();
+
+    }, [])
+
     return (
         <FeaturedProductsWrapper>
             <h1 className="title">Productos Destacados</h1>
 
             <FeaturedProductsContainer>
                 <ProductGrid>
-                    {
-                        mockProducts.map(product => (
+                    {products && (
+                        products.map(product => (
                             <ProductCard
-                                key={product.id}
-                                id={product.id.toString()}
-                                name={product.name}
-                                price={product.price}
-                                imageUrl={product.imageUrl}
-                                onClick={() => Router.push(`/product/${product.id}`)}
+                                key={product?.id}
+                                id={product?.id.toString()}
+                                name={product?.name}
+                                price={product?.variants[0].price}
+                                imageUrl={product?.mainImageUrl}
+                                onClick={() => Router.push(`/product/${product?.id}`)}
                             />
                         ))
-                    }
+                    )}
                 </ProductGrid>
             </FeaturedProductsContainer>
         </FeaturedProductsWrapper>
