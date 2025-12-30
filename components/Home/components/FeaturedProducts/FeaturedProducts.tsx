@@ -5,6 +5,7 @@ import ProductCard from "../../../ProductCard"
 import { useEffect, useState } from "react"
 import { IProduct } from "../../../../interfaces/product"
 import { useMutation } from "@tanstack/react-query"
+import Loader from "../../../Loader"
 
 export const FeaturedProducts = () => {
     const [products, setProducts] = useState<IProduct[]>(undefined);
@@ -16,7 +17,7 @@ export const FeaturedProducts = () => {
         data: dataLogin
     } = useMutation({
         mutationFn: async () => {
-            if(products) return null;
+            if (products) return null;
 
             const productFetch = fetch("/api/products/featured")
                 .then((res) => res.json())
@@ -41,7 +42,11 @@ export const FeaturedProducts = () => {
     return (
         <FeaturedProductsWrapper>
             <h1 className="title">Productos Destacados</h1>
-
+            {isPending && (
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%", width: "100%" }}>
+                    <Loader />
+                </div>
+            )}
             <FeaturedProductsContainer>
                 <ProductGrid>
                     {products && (

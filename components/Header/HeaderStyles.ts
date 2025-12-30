@@ -8,6 +8,10 @@ export const HeaderContainer = styled.header`
   top: 0;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  a{
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 export const Container = styled.div`
