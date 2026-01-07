@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 export default function useHeader() {
     const isLogged = useRecoilValue(isLoggedState);
-    const [, setAuthToken ] = useRecoilState(authTokenState)
+    const [, setAuthToken] = useRecoilState(authTokenState)
     const router = useRouter();
 
     const onSearch = () => {
@@ -17,9 +17,9 @@ export default function useHeader() {
     }
 
     const onLoginClick = () => {
-        if(isLogged){
+        if (isLogged) {
             router.push('/profile');
-        }else{
+        } else {
             router.push('/signin');
         }
     }

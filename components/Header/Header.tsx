@@ -58,7 +58,7 @@ export default function Header() {
             {menuOpen && (
                 <MobileMenu>
                     <div className="options">
-                        <Link href="/login">
+                        <Link href="/signin">
                             <p onClick={onLoginClick}>Ingresar</p>
                         </Link>
                         <Link href="/profile">

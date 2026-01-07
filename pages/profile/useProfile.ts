@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { authTokenState } from "../../store/atoms";
 import { useRecoilValue } from "recoil";
+import { useRouter } from "next/router";
 
 export interface IUserData {
     nombre: string,
@@ -12,17 +13,25 @@ export interface IUserData {
 
 export function useProfile() {
     const token = useRecoilValue(authTokenState);
-    const [userData, setUserData] = useState<IUserData | null>(null)
+    const [userData, setUserData] = useState<IUserData | null>(null);
+    const [newAddress, setNewAddress] = useState('');
+    const router = useRouter();
 
     useEffect(() => {
         //Se podría implementar aca un reactQuery, para tener el isLoading, pero se opta por fetch por la facilidad.
         const getUserInfo = async () => {
             const data = await fetch('/api/me', {
                 headers: {
-                    Authorization: token
+                    Authorization: 'Bearer ' + token
                 }
-            }).then((res) => res.json());
-
+            }).then((res) => {
+                if (res.status === 401) {
+                    router.push('/signin');
+                    localStorage.removeItem('vapp-token');
+                    console.log("Sesión vencida");
+                }
+                return res.json();
+            });
             setUserData({
                 nombre: data?.nombre || '-',
                 email: data?.email || '-',
@@ -35,8 +44,26 @@ export function useProfile() {
         getUserInfo();
     }, [token]);
 
+    const handleSubmit = async () => {
+        if (!newAddress) return;
+        const data = await fetch('/api/me', {
+            method: 'PATCH',
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                address: newAddress,
+                email: userData?.email
+            })
+        }).then((res) => {
+            return res.json();
+        });
+    }
+
     return {
         userData,
-        setUserData
+        setUserData,
+        setNewAddress,
+        handleSubmit
     }
 }

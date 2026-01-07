@@ -30,7 +30,7 @@ export const useProduct = (id: string, isLogged: boolean) => {
     });
 
     const onBuyClick = () => {
-        if (!isLogged) router.push("/login");
+        if (!isLogged) router.push("/signin");
 
         //Implementar lógica de checkout.
     }

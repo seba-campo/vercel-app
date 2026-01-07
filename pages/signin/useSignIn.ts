@@ -22,7 +22,7 @@ export const useSignIn = () => {
     } = useMutation({
         mutationFn: (email: string) => {
             const formattedEmail = formatAndValidateEmail(email);
-            if (!formattedEmail){
+            if (!formattedEmail) {
                 throw new Error("Invalid email");
             };
             return fetch("/api/auth", {

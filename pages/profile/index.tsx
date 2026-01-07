@@ -6,7 +6,11 @@ import { useProfile } from "./useProfile";
 
 
 export default function Profile() {
-    const { userData } = useProfile();
+    const {
+        userData,
+        setNewAddress,
+        handleSubmit
+    } = useProfile();
 
     return (
         <Layout>
@@ -17,24 +21,24 @@ export default function Profile() {
                 <div className="profile">
                     <form onSubmit={() => { }}>
                         <div style={{ marginBottom: "1rem" }}>
-                            <label htmlFor="email" style={{ display: "block", marginBottom: "25px" }}>
+                            <label htmlFor="nombre" style={{ display: "block", marginBottom: "25px" }}>
                                 Nombre completo
                                 <input
-                                    type="email"
-                                    id="email"
-                                    // value={email}
-                                    // onChange={(e) => setEmail(e.target.value)}
+                                    type="nombre"
+                                    id="nombre"
+                                    value={userData?.nombre}
+                                    disabled={true}
                                     required
                                 />
                             </label>
 
-                            <label htmlFor="email" style={{ display: "block", marginBottom: "25px" }}>
+                            <label htmlFor="address" style={{ display: "block", marginBottom: "25px" }}>
                                 Direccion
                                 <input
-                                    type="email"
-                                    id="email"
-                                    // value={email}
-                                    // onChange={(e) => setEmail(e.target.value)}
+                                    type="address"
+                                    id="address"
+                                    placeholder={userData?.address}
+                                    onChange={(e) => setNewAddress(e.target.value)}
                                     required
                                 />
                             </label>
@@ -44,8 +48,8 @@ export default function Profile() {
                                 <input
                                     type="email"
                                     id="email"
-                                    // value={email}
-                                    // onChange={(e) => setEmail(e.target.value)}
+                                    value={userData?.email}
+                                    disabled={true}
                                     required
                                 />
                             </label>
@@ -54,8 +58,7 @@ export default function Profile() {
                             type="submit"
                             variant="secondary"
                             style={{ width: "100%" }}
-                        // onClick={handleSubmit}
-                        // isLoading={isPending}
+                            onClick={handleSubmit}
                         >
                             Ingresar
                         </Button>
