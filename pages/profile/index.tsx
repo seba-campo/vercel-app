@@ -1,7 +1,7 @@
 import { Button } from "../../components";
 import Layout from "../../components/Layout";
-import { ProfileWrapper } from "./profileStyles";
-import { useProfile } from "./useProfile";
+import ProfileWrapper from "./profileStyles";
+import useProfile from "./useProfile";
 
 
 

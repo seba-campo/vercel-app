@@ -6,7 +6,7 @@ import { IProduct } from "../../interfaces/product";
 import IOrderDataResponse from "../../interfaces/orderDataResponse";
 
 
-export const useProduct = (id: string, isLogged: boolean) => {
+const useProduct = (id: string, isLogged: boolean) => {
     const router = useRouter();
     const [product, setProduct] = useState<IProduct | null>(null);
     const [isProcessingPayment, setIsProcessingPayment] = useState(false);
@@ -79,3 +79,5 @@ export const useProduct = (id: string, isLogged: boolean) => {
         onBuyClick,
     };
 }
+
+export default useProduct

@@ -1,11 +1,10 @@
 
 import { Button } from "../../components";
-import { FormWrapper } from "./signInStyles";
+import FormWrapper from "./signInStyles";
 import Layout from "../../components/Layout";
-import { useSignIn } from "./useSignIn";
+import useSignIn from "./useSignIn";
 
 export default function SignIn() {
-
     const {
         code,
         email,

@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import ProductDetail from "../../components/ProductDetail";
-import { SingleProductWrapper } from "./ProductStyle";
+import SingleProductWrapper from "./ProductStyle";
 import Loader from "../../components/Loader";
-import { useProduct } from "./useProduct";
+import useProduct from "./useProduct";
 import { useRecoilValue } from "recoil";
 import { isLoggedState } from "../../store/selectors";
 

@@ -11,7 +11,7 @@ export interface IUserData {
     id: string
 }
 
-export function useProfile() {
+const useProfile = () => {
     const token = useRecoilValue(authTokenState);
     const [userData, setUserData] = useState<IUserData | null>(null);
     const [newAddress, setNewAddress] = useState('');
@@ -71,3 +71,5 @@ export function useProfile() {
         handleSubmit
     }
 }
+
+export default useProfile

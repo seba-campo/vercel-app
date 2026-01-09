@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ProfileWrapper = styled.div`
+const ProfileWrapper = styled.div`
     max-width: 400px;
     margin: 0 auto;
     padding: 2rem;
@@ -34,3 +34,5 @@ export const ProfileWrapper = styled.div`
         padding: 0.5rem
     }
 `
+
+export default ProfileWrapper
