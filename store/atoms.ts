@@ -6,3 +6,13 @@ export const authTokenState = atom<string | null>({
     ? localStorage.getItem("vapp-token")
     : null,
 });
+
+export const userIdState = atom<string | null>({
+  key: "UserId",
+  default: ""
+});
+
+export const userEmailState = atom<string | null>({
+  key: "UserEmail",
+  default: ""
+});

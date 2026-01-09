@@ -13,8 +13,9 @@ export default methods({
         res.send(await getUserDataAsync(email))
     }),
     patch: authorization(async (req: NextApiRequest, res: NextApiResponse) => {
-        const newAddress = (req as any).body.address;
-        const email = (req as any).body.email;
+        const reqBody = JSON.parse(req.body);
+        const newAddress = reqBody.address;
+        const email = reqBody.email;
         res.send(await updateUserAddressAsync(email, newAddress))
     })
 })

@@ -1,21 +1,22 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { authTokenState } from "../../store/atoms";
+import { useSetRecoilState } from "recoil";
+import { userIdState } from "../../store/atoms";
 
 export default function Logout() {
     const router = useRouter();
+    const setAuthTokenState = useSetRecoilState(authTokenState);
+    const setUserIdState = useSetRecoilState(userIdState);
 
     useEffect(() => {
-        // TODO: Implementar lógica de logout
-        // Por ejemplo: limpiar tokens, cookies, localStorage, etc.
-
-        // Limpiar localStorage
         if (typeof window !== "undefined") {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-            // Agregar cualquier otra limpieza necesaria
+            setAuthTokenState(null);
+            setUserIdState(null);
         }
 
-        // Redirigir a la página de inicio
         router.push("/");
     }, [router]);
 

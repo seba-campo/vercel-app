@@ -3,16 +3,18 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { formatAndValidateEmail } from "../../utils/validateEmail";
 import { formatSetNewToken } from "../../utils/tokenStorage";
-import { authTokenState } from "../../store/atoms";
+import { authTokenState, userEmailState } from "../../store/atoms";
 import { useSetRecoilState } from "recoil";
+import { userIdState } from "../../store/atoms";
 
 export const useSignIn = () => {
+    const router = useRouter();
+    const setAuthTokenState = useSetRecoilState(authTokenState);
+    const setUserIdState = useSetRecoilState(userIdState);
+    const setUserEmailState = useSetRecoilState(userEmailState);
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
     const [isVerifyCode, setIsVerifyCode] = useState(false);
-    const setAuthTokenState = useSetRecoilState(authTokenState);
-
-    const router = useRouter();
 
     const {
         mutate: mutateLogin,
@@ -36,6 +38,8 @@ export const useSignIn = () => {
         onSuccess: (dataLogin) => {
             console.log("Auth success:", dataLogin);
             setIsVerifyCode(true);
+            setUserIdState(dataLogin.id);
+            setUserEmailState(dataLogin.data.email);
         },
         onError: (error: Error) => {
             alert(error.message);

@@ -44,9 +44,10 @@ export function useProfile() {
         getUserInfo();
     }, [token]);
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if (!newAddress) return;
-        const data = await fetch('/api/me', {
+        const newUserData: IUserData = await fetch('/api/me', {
             method: 'PATCH',
             headers: {
                 Authorization: 'Bearer ' + token
@@ -58,6 +59,9 @@ export function useProfile() {
         }).then((res) => {
             return res.json();
         });
+
+        if (!newUserData) return;
+        setUserData(newUserData);
     }
 
     return {

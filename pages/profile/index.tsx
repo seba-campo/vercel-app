@@ -19,7 +19,7 @@ export default function Profile() {
                     <h1>Perfil</h1>
                 </div>
                 <div className="profile">
-                    <form onSubmit={() => { }}>
+                    <form onSubmit={handleSubmit}>
                         <div style={{ marginBottom: "1rem" }}>
                             <label htmlFor="nombre" style={{ display: "block", marginBottom: "25px" }}>
                                 Nombre completo
@@ -58,7 +58,6 @@ export default function Profile() {
                             type="submit"
                             variant="secondary"
                             style={{ width: "100%" }}
-                            onClick={handleSubmit}
                         >
                             Ingresar
                         </Button>
