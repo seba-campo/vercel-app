@@ -7,7 +7,7 @@ import { authTokenState, userEmailState } from "../../store/atoms";
 import { useSetRecoilState } from "recoil";
 import { userIdState } from "../../store/atoms";
 
-export const useSignIn = () => {
+const useSignIn = () => {
     const router = useRouter();
     const setAuthTokenState = useSetRecoilState(authTokenState);
     const setUserIdState = useSetRecoilState(userIdState);
@@ -113,3 +113,4 @@ export const useSignIn = () => {
         handleVerifyCode,
     }
 }
+export default useSignIn

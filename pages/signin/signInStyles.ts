@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FormWrapper = styled.div`
+const FormWrapper = styled.div`
     max-width: 400px;
     margin: 0 auto;
     padding: 2rem;
@@ -22,3 +22,5 @@ export const FormWrapper = styled.div`
         padding: 0.5rem
     }
 `;
+
+export default FormWrapper
