@@ -71,7 +71,7 @@ export class Auth{
             throw new Error("Usuario no encontrado");
         }
         const authDoc = snapshot.docs[0].data();
-        this.ref = snapshot.docs[0].ref
+        this.ref = snapshot.docs[0].ref;
         const expiration = authDoc.expiration.toDate() as Date;
         const token = authDoc.token as number;
         const now = new Date();
