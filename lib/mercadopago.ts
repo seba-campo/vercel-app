@@ -45,9 +45,9 @@ export async function createSingleProductPreference(
       ],
       // URL de redirección en los distintos casos
       back_urls: {
-        success: "https://" + BASE_URL + "/checkout/success",
-        failure: "https://" + BASE_URL + "/checkout/failure",
-        pending: "https://" + BASE_URL + "/checkout/pending",
+        success: "https://" + BASE_URL + "/history",
+        failure: "https://" + BASE_URL + "/history",
+        pending: "https://" + BASE_URL + "/history",
       },
       // Esto puede ser el id o algún otro identificador
       // que te ayude a vincular este pago con el producto más adelante
