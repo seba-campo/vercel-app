@@ -59,7 +59,10 @@ const useProduct = (id: string, isLogged: boolean) => {
     });
 
     const onBuyClick = (userId: string) => {
-        if (!isLogged) router.push("/signin");
+        if (!isLogged) {
+            router.push("/signin")
+            return;
+        }
         createOrder({ productId: id, userId });
     }
 

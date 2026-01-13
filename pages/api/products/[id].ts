@@ -1,6 +1,6 @@
 import next, { NextApiRequest, NextApiResponse } from "next";
 // import {client} from "../../../lib/firebase";
-import * as methods from "micro-method-router";
+import methods from "micro-method-router";
 import { getProductByIdAsync } from "../../../controllers/productController";
 
 

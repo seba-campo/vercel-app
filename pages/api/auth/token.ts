@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { auntenticateAsync } from "../../../controllers/authController";
-import * as methods from "micro-method-router";
+import methods from "micro-method-router";
 
 export default methods({
     async post(req: NextApiRequest, res: NextApiResponse) {

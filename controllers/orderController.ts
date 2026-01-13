@@ -53,7 +53,10 @@ export async function getOrdersByUserIdAsync(userId: string) {
     console.log(orderSnapshot.docs)
 
     orderSnapshot.docs.forEach((e) => {
-        orders.push(e.data())
+        orders.push({
+            id: e.id,
+            orderData: e.data()
+        })
     })
     return orders;
 }
