@@ -25,7 +25,7 @@ const nextConfig = {
         unoptimized: true,
     },
 
-    pageExtensions: ['tsx', 'jsx'],
+    pageExtensions: ['ts', 'tsx', 'js', 'jsx'],
 }
 
 module.exports = nextConfig

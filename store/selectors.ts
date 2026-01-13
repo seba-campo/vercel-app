@@ -6,20 +6,21 @@ export const userState = selector({
   get: async ({ get }) => {
     if (!get(isLoggedState)) return null;
 
-    const res = await fetch(`${process.env.MAIN_API_URL}/me`, {
+    const res = await fetch(`/api/me`, {
       headers: {
         Authorization: localStorage.getItem("vapp-token") ?? "",
       },
     });
 
+    if (res.status == 401) return null;
     return res.json();
   },
 });
 
 
 export const isLoggedState = selector({
-    key: "IsLogged",
-    get: ({ get }) => {
-        return Boolean(get(authTokenState));
-    },
+  key: "IsLogged",
+  get: ({ get }) => {
+    return Boolean(get(authTokenState));
+  },
 })

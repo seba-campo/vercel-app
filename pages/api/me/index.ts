@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import * as methods from "micro-method-router";
+import methods from "micro-method-router";
 import authorization from "../../../middleware/authorization";
 import { getUserDataAsync, updateUserAddressAsync } from "../../../controllers/userController";
 

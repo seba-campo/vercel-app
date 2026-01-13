@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import * as methods from "micro-method-router";
+import methods from "micro-method-router";
 import { generateOrderAndPaymentAsync, getOrdersByUserIdAsync } from "../../../controllers/orderController";
 
 export default methods({
