@@ -1,10 +1,11 @@
-import { lastDayOfDecade } from "date-fns"
-import Layout from "../components/layout"
+import Layout from "../components/Layout"
+import HomePage from "../components/Home/Home"
 
-export default function App(){
-    return (
-        <Layout>
-            <div>Soy la main page</div>
-        </Layout>
-    )
+
+export default function App() {
+  return (
+    <Layout>
+      <HomePage></HomePage>
+    </Layout>
+  );
 }

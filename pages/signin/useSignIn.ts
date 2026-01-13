@@ -1,0 +1,116 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+import { formatAndValidateEmail } from "../../utils/validateEmail";
+import { formatSetNewToken } from "../../utils/tokenStorage";
+import { authTokenState, userEmailState } from "../../store/atoms";
+import { useSetRecoilState } from "recoil";
+import { userIdState } from "../../store/atoms";
+
+const useSignIn = () => {
+    const router = useRouter();
+    const setAuthTokenState = useSetRecoilState(authTokenState);
+    const setUserIdState = useSetRecoilState(userIdState);
+    const setUserEmailState = useSetRecoilState(userEmailState);
+    const [email, setEmail] = useState("");
+    const [code, setCode] = useState("");
+    const [isVerifyCode, setIsVerifyCode] = useState(false);
+
+    const {
+        mutate: mutateLogin,
+        isPending,
+        error,
+        data: dataLogin
+    } = useMutation({
+        mutationFn: (email: string) => {
+            const formattedEmail = formatAndValidateEmail(email);
+            if (!formattedEmail) {
+                throw new Error("Invalid email");
+            };
+            return fetch("/api/auth", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            }).then((res) => res.json());
+        },
+        onSuccess: (dataLogin) => {
+            console.log("Auth success:", dataLogin);
+            setIsVerifyCode(true);
+            setUserIdState(dataLogin.id);
+            setUserEmailState(dataLogin.data.email);
+        },
+        onError: (error: Error) => {
+            alert(error.message);
+        }
+    });
+
+    const {
+        mutate: mutateVerifyCode,
+        isPending: isPendingVerifyCode,
+        error: errorVerifyCode,
+        data: dataVerifyCode,
+        status
+    } = useMutation({
+        mutationFn: async (code: string) => {
+            const res = await fetch("/api/auth/token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    token: parseInt(code)
+                }),
+            });
+
+            if (!res.ok) {
+                throw new Error('Error verifying code');
+            }
+
+            return res.json();
+        },
+        onSuccess: (data) => {
+            setAuthTokenState(data.token)
+            setIsVerifyCode(false);
+            formatSetNewToken(data.token);
+            router.push("/");
+        },
+        onError: (errorVerifyCode) => {
+            alert(errorVerifyCode);
+            setIsVerifyCode(false);
+            setEmail("");
+            setCode("");
+        }
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        mutateLogin(email);
+    };
+
+    const handleVerifyCode = (e: React.FormEvent) => {
+        e.preventDefault();
+        mutateVerifyCode(code);
+    };
+
+    return {
+        code,
+        email,
+        isVerifyCode,
+        isPending,
+        isPendingVerifyCode,
+        error,
+        errorVerifyCode,
+        dataLogin,
+        dataVerifyCode,
+        status,
+        setCode,
+        setEmail,
+        setIsVerifyCode,
+        handleSubmit,
+        handleVerifyCode,
+    }
+}
+export default useSignIn

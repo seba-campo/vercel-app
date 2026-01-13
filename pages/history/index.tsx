@@ -1,7 +1,11 @@
 import React from "react";
 import Layout from "../../components/Layout";
 import { Typography } from "../../components/Typography";
+<<<<<<< HEAD
 import { useOrders } from "../../hooks/useHistory";
+=======
+import { useOrders } from "./useHistory";
+>>>>>>> f3132233de2589b4c9dd837e0ef5a2ddaf3c6afa
 
 export default function HistoryPage() {
     const orders = useOrders();

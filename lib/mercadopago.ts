@@ -4,10 +4,10 @@ import { MercadoPagoConfig, Payment, Preference } from "mercadopago";
 // Step 2: Initialize the client object
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_TOKEN as string,
-  options: { timeout: 5000, idempotencyKey:"ABC" } 
+  options: { timeout: 5000, idempotencyKey: "ABC" }
 });
 
-const BASE_URL = process.env.VERCEL_URL || "apx.school";
+const BASE_URL = process.env.BASE_URL || "compralo.vercel.app";
 
 // Step 3: Initialize the API object
 const pref = new Preference(client);
@@ -45,9 +45,9 @@ export async function createSingleProductPreference(
       ],
       // URL de redirección en los distintos casos
       back_urls: {
-        success: "https://" + BASE_URL + "/donate/success",
-        failure: "https://" + BASE_URL + "/donate/failure",
-        pending: "https://" + BASE_URL + "/donate/pending",
+        success: "https://" + BASE_URL + "/checkout/success",
+        failure: "https://" + BASE_URL + "/checkout/failure",
+        pending: "https://" + BASE_URL + "/checkout/pending",
       },
       // Esto puede ser el id o algún otro identificador
       // que te ayude a vincular este pago con el producto más adelante

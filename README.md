@@ -4,6 +4,12 @@ This is a Next.js project that provides a backend API for an e-commerce platform
 
 [PostmanDocs](https://documenter.getpostman.com/view/23923667/2sB3HtEc7r)
 
+## Cuentas MP de Prueba para hacer checkout:
+
+*   User: TESTUSER1829259281
+*   Password: Erc4ktaz60
+*   Token: 920219
+
 ## Features
 
 *   User authentication with email and tokens.
