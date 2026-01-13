@@ -6,11 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../interfaces/product";
 import Loader from "../../components/Loader";
-<<<<<<< HEAD
 import { SearchContainer, ResultCount, Grid, EmptyState } from "../../styles/search";
-=======
-import { SearchContainer, ResultCount, Grid, EmptyState } from "./styles";
->>>>>>> f3132233de2589b4c9dd837e0ef5a2ddaf3c6afa
 
 export default function Search() {
     const router = useRouter();
